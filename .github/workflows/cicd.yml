@@ -54,7 +54,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-          cache: true
 
       - name: ⬇️ Download package artifact
         uses: actions/download-artifact@v4
