@@ -5,5 +5,5 @@ namespace Phoenix.AlQaseh.Abstractions;
 
 public interface IAlQasehHttpClient
 {
-    Task<AlQasehPaymentResponse> CreatePayment(CreatePaymentRequest request, CancellationToken cancellationToken);
+    Task<(bool ok, string? link, AlQasehPaymentResponse resp)> CreatePaymentLinkAsync(CreatePaymentRequest request, CancellationToken ct);
 }

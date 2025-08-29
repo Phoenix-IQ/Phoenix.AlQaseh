@@ -1,18 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Phoenix.AlQaseh.Configurations;
 
 public sealed class AlQasehOptions
 {
     public AlQasehOptions() { }
-    public static AlQasehOptions CreateProduction(string baseUrl, string clientId, string clientSecret,string paymentPath)
+    public static AlQasehOptions CreateProduction(string baseUrl, string clientId, string clientSecret,string paymentRequestPath,string paymentURL)
     {
         return new()
         {
             BaseUrl = baseUrl,
             ClientId = clientId,
             ClientSecret = clientSecret,
-            PaymentPath=paymentPath
+            PaymentRequestPath = paymentRequestPath,
+            PaymentURL = paymentURL
         };
     }
     internal static AlQasehOptions CreateSandBox()
@@ -22,7 +24,8 @@ public sealed class AlQasehOptions
             BaseUrl = "https://api-test.alqaseh.com/v1",
             ClientSecret = "Lr10yWWmm1dXLoI7VgXCrQVnlq13c1G0",
             ClientId = "public_test",
-            PaymentPath = "egw/payments/create"
+            PaymentRequestPath = "egw/payments/create",
+            PaymentURL= "https://pay-test.alqaseh.com/pay/"
         };
     }
 
@@ -34,6 +37,9 @@ public sealed class AlQasehOptions
     public string ClientSecret { get; set; } = default!;
 
     [Required(ErrorMessage ="AlQaseh Payment URL is required and missing")]
-    public string PaymentPath { get; set; } = default!;
+    public string PaymentRequestPath { get; set; } = default!;
+
+    [Required(ErrorMessage ="AlQaseh PaymentURL is required"),Url(ErrorMessage ="AlQaseh paymentURL is invalid")]
+    public string PaymentURL { get; set; } = string.Empty;
 
 }

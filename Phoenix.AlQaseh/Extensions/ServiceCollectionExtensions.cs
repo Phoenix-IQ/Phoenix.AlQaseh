@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
             if (string.IsNullOrWhiteSpace(o.BaseUrl)) o.BaseUrl = s.BaseUrl;
             if (string.IsNullOrWhiteSpace(o.ClientId)) o.ClientId = s.ClientId;
             if (string.IsNullOrWhiteSpace(o.ClientSecret)) o.ClientSecret = s.ClientSecret;
-            if (string.IsNullOrWhiteSpace(o.PaymentPath)) o.PaymentPath = s.PaymentPath;
+            if (string.IsNullOrWhiteSpace(o.PaymentRequestPath)) o.PaymentRequestPath = s.PaymentRequestPath;
         });
 
         RegisterHttpClientAndClient(services);
@@ -54,7 +54,7 @@ public static class ServiceCollectionExtensions
             o.BaseUrl = baseUrl;
             o.ClientId = clientId;
             o.ClientSecret = clientSecret;
-            o.PaymentPath = paymentPath;
+            o.PaymentRequestPath = paymentPath;
         });
 
         services.AddOptions<AlQasehOptions>()
