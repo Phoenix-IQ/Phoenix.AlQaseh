@@ -4,13 +4,30 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <!-- NuGet package metadata -->
+	  <IsPackable>true</IsPackable>
+	  <PackageId>Phoenix.AlQaseh</PackageId>
+	  <Title>Phoenix.AlQaseh</Title>
+	  <Authors>Phoenix IQ</Authors>
+	  <Company>Phoenix IQ</Company>
+	  <Description>AlQaseh payment gateway SDK for .NET.</Description>
+	  <PackageTags>payments;gateway;alqaseh;phoenix;net9</PackageTags>
+	  <RepositoryUrl>https://github.com/Phoenix-IQ/Phoenix.AlQaseh/</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageProjectUrl>https://github.com/Phoenix-IQ/Phoenix.AlQaseh/</PackageProjectUrl>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <IncludeSymbols>true</IncludeSymbols>
+	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <EmbedUntrackedSources>true</EmbedUntrackedSources>
+	  <Deterministic>true</Deterministic>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <Version>1.0.0a</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+	  <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.8" />
   </ItemGroup>

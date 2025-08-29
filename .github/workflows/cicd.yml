@@ -1,0 +1,77 @@
+name: CI/CD - Build and Publish Phoenix.AlQaseh
+
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - 'v*'           # publish on version tags
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+  packages: write   # required to publish to GitHub Packages
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+          cache: true
+
+      - name: 📦 Restore dependencies
+        run: dotnet restore
+
+      - name: 🛠️ Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: ✅ Run Tests
+        run: dotnet test --configuration Release --no-build --verbosity normal
+
+      - name: 📦 Pack (always pack; publish only on tag)
+        run: dotnet pack Phoenix.AlQaseh/Phoenix.AlQaseh.csproj --configuration Release --output ./nupkgs
+
+      - name: ⬆️ Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nupkgs
+          path: ./nupkgs/*.nupkg
+
+  publish_gpr:
+    needs: build_test
+    if: startsWith(github.ref, 'refs/tags/v')    # only on version tags
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+          cache: true
+
+      - name: ⬇️ Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nupkgs
+          path: ./nupkgs
+
+      # Push directly using GITHUB_TOKEN (no PAT needed for public repo)
+      - name: 🚀 Push to GitHub Packages (GPR)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          for pkg in ./nupkgs/*.nupkg; do
+            dotnet nuget push "$pkg" \
+              --source "https://nuget.pkg.github.com/${OWNER}/index.json" \
+              --api-key "$GITHUB_TOKEN" \
+              --skip-duplicate
+          done
