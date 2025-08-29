@@ -6,7 +6,8 @@ using System.Text.Json;
 
 namespace Phoenix.AlQaseh.Infrastructure;
 
-public class AlQasehHttpClient(IHttpClientFactory clientFactory, AlQasehOptions options) : IAlQasehHttpClient
+
+internal class AlQasehHttpClient(IHttpClientFactory clientFactory, AlQasehOptions options) : IAlQasehHttpClient
 {
     public const string ClientName = "AlQasehClient";
     private readonly HttpClient _client = clientFactory.CreateClient(ClientName);

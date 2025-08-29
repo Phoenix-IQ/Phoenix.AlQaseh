@@ -9,6 +9,9 @@ using System.Text;
 
 namespace Phoenix.AlQaseh.Extensions;
 
+/// <summary>
+/// Register AlQaseh service
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>
