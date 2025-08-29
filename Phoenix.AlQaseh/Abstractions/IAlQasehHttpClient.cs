@@ -12,9 +12,10 @@ public interface IAlQasehHttpClient
     /// Creates a new payment at AlQaseh.
     /// </summary>
     /// <param name="request">The payment request payload (amount, currency, order id, etc.).</param>
+    /// <param name="cancellationToken">The cancellationtoken</param>
     /// <returns>
     /// A response that includes <c>payment_id</c> and <c>token</c> on success,
     /// or error fields (<c>err</c>, <c>error_code</c>, <c>reference_code</c>) on failure.
     /// </returns>
-    Task<(bool ok, string? link, AlQasehPaymentResponse resp)> CreatePaymentLinkAsync(CreatePaymentRequest request, CancellationToken ct);
+    Task<(bool ok, string? link, AlQasehPaymentResponse resp)> CreatePaymentLinkAsync(CreatePaymentRequest request, CancellationToken cancellationToken);
 }
