@@ -12,9 +12,10 @@ internal class AlQasehHttpClient(IHttpClientFactory clientFactory, IOptions<AlQa
 {
     public const string ClientName = "AlQasehClient";
     private readonly HttpClient _client = clientFactory.CreateClient(ClientName);
+    private readonly AlQasehOptions _options = options.Value;
     private async Task<AlQasehPaymentResponse> CreatePayment(CreatePaymentRequest request, CancellationToken cancellationToken)
     {
-        using var response = await _client.PostAsJsonAsync(options.PaymentRequestPath, request, cancellationToken);
+        using var response = await _client.PostAsJsonAsync(_options.PaymentRequestPath, request, cancellationToken);
         string content = await response.Content.ReadAsStringAsync(cancellationToken);
         AlQasehPaymentResponse? result = JsonSerializer.Deserialize<AlQasehPaymentResponse>(content);
         return result ?? new AlQasehPaymentResponse
@@ -29,7 +30,7 @@ internal class AlQasehHttpClient(IHttpClientFactory clientFactory, IOptions<AlQa
         if (!resp.IsSuccess || string.IsNullOrWhiteSpace(resp.Token))
             return (false, null, resp);
 
-        var link = $"{options.PaymentURL}{resp.Token}";
+        var link = $"{_options.PaymentURL}{resp.Token}";
         return (true, link, resp);
     }
 
