@@ -1,4 +1,5 @@
-﻿using Phoenix.AlQaseh.Abstractions;
+﻿using Microsoft.Extensions.Options;
+using Phoenix.AlQaseh.Abstractions;
 using Phoenix.AlQaseh.Configurations;
 using Phoenix.AlQaseh.Models.Requests;
 using Phoenix.AlQaseh.Models.Responses;
@@ -7,7 +8,7 @@ using System.Text.Json;
 namespace Phoenix.AlQaseh.Infrastructure;
 
 
-internal class AlQasehHttpClient(IHttpClientFactory clientFactory, AlQasehOptions options) : IAlQasehHttpClient
+internal class AlQasehHttpClient(IHttpClientFactory clientFactory, IOptions<AlQasehOptions> options) : IAlQasehHttpClient
 {
     public const string ClientName = "AlQasehClient";
     private readonly HttpClient _client = clientFactory.CreateClient(ClientName);
